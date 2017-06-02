@@ -28,29 +28,38 @@
         DirectedScrollViewChild *scrollableChild = (DirectedScrollViewChild*)subview;
 
         if (subview == nil) continue;
-
-        if (![scrollableChild shouldScrollVertically]) {
-          CGFloat scrollTop = scrollView.contentOffset.y + self.contentInset.top;
-
-          // adjust the y offset based on the current zoom scale
-          // if we're zoomed in the offset required will be less, if we're zoomed out it will be more
-          CGFloat yOffset = scrollTop / scrollView.zoomScale;
-
-          // translate the horizontally scrolling subview by the calculated y offset
-          // this cancels out the vertical translation applied by the scrollview and keeps the y position fixed
-          scrollableChild.transform = CGAffineTransformMakeTranslation(0, yOffset);
-        }
-
-        if (![scrollableChild shouldScrollHorizontally]) {
-          CGFloat scrollLeft = scrollView.contentOffset.x + self.contentInset.left;
-
-          // adjust the x offset based on the current zoom scale
-          // if we're zoomed in the offset required will be less, if we're zoomed out it will be more
-          CGFloat xOffset = scrollLeft / scrollView.zoomScale;
-
-          // translate the vertically scrolling subview by the calculated x offset
-          // this cancels out the horizontal translation applied by the scrollview and keeps the x position fixed
-          scrollableChild.transform = CGAffineTransformMakeTranslation(xOffset, 0);
+        
+        if([scrollableChild shouldNotScroll]) {
+            CGFloat scrollTop = scrollView.contentOffset.y + self.contentInset.top;
+            CGFloat yOffset = scrollTop / scrollView.zoomScale;
+            CGFloat scrollLeft = scrollView.contentOffset.x + self.contentInset.left;
+            CGFloat xOffset = scrollLeft / scrollView.zoomScale;
+            scrollableChild.transform = CGAffineTransformMakeTranslation(xOffset, yOffset);
+        }else{
+            
+            if (![scrollableChild shouldScrollVertically]) {
+                CGFloat scrollTop = scrollView.contentOffset.y + self.contentInset.top;
+                
+                // adjust the y offset based on the current zoom scale
+                // if we're zoomed in the offset required will be less, if we're zoomed out it will be more
+                CGFloat yOffset = scrollTop / scrollView.zoomScale;
+                
+                // translate the horizontally scrolling subview by the calculated y offset
+                // this cancels out the vertical translation applied by the scrollview and keeps the y position fixed
+                scrollableChild.transform = CGAffineTransformMakeTranslation(0, yOffset);
+            }
+            
+            if (![scrollableChild shouldScrollHorizontally]) {
+                CGFloat scrollLeft = scrollView.contentOffset.x + self.contentInset.left;
+                
+                // adjust the x offset based on the current zoom scale
+                // if we're zoomed in the offset required will be less, if we're zoomed out it will be more
+                CGFloat xOffset = scrollLeft / scrollView.zoomScale;
+                
+                // translate the vertically scrolling subview by the calculated x offset
+                // this cancels out the horizontal translation applied by the scrollview and keeps the x position fixed
+                scrollableChild.transform = CGAffineTransformMakeTranslation(xOffset, 0);
+            }
         }
     }
 }

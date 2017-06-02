@@ -13,6 +13,7 @@
 static NSString *const SCROLL_DIRECTION_BOTH = @"both";
 static NSString *const SCROLL_DIRECTION_HORIZONTAL = @"horizontal";
 static NSString *const SCROLL_DIRECTION_VERTICAL = @"vertical";
+static NSString *const SCROLL_DIRECTION_NONE = @"none";
 
 - (BOOL)shouldScrollHorizontally {
   return [self.scrollDirection isEqualToString:SCROLL_DIRECTION_BOTH] ||
@@ -22,6 +23,10 @@ static NSString *const SCROLL_DIRECTION_VERTICAL = @"vertical";
 - (BOOL)shouldScrollVertically {
   return [self.scrollDirection isEqualToString:SCROLL_DIRECTION_BOTH] ||
     [self.scrollDirection isEqualToString:SCROLL_DIRECTION_VERTICAL];
+}
+
+- (BOOL)shouldNotScroll {
+    return [self.scrollDirection isEqualToString:SCROLL_DIRECTION_NONE];
 }
 
 @end

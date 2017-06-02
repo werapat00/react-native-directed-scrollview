@@ -15,6 +15,8 @@
 
 - (BOOL)shouldScrollVertically;
 
+- (BOOL)shouldNotScroll;
+
 @end
 
 @interface DirectedScrollViewChildManager : RCTViewManager
